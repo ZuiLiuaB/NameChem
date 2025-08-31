@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>分析结果</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <style>
+        body {
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+        }
+        .names {
+            font-size: 24px;
+            margin: 20px 0;
+            color: #555;
+        }
+        .similarity-score {
+            font-size: 72px;
+            font-weight: bold;
+            margin: 30px 0;
+            background: linear-gradient(45deg, #007bff, #0056b3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .evaluation {
+            font-size: 18px;
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            color: #333;
+        }
+        .back-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #6c757d;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .back-button:hover {
+            background-color: #5a6268;
+        }
+        .error {
+            color: #dc3545;
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        .retry-button {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .retry-button:hover {
+            background-color: #0056b3;
+        }
+        
+        /* 提示信息样式 */
+        .disclaimer {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 5px;
+            font-size: 14px;
+            color: #856404;
+            text-align: center;
+        }
+        
+        /* 移动端适配 */
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            .container {
+                padding: 20px;
+            }
+            h1 {
+                font-size: 24px;
+            }
+            .names {
+                font-size: 20px;
+            }
+            .similarity-score {
+                font-size: 60px;
+            }
+            .evaluation {
+                font-size: 16px;
+                padding: 12px;
+            }
+        }
+        
+        @media (max-width: 400px) {
+            .container {
+                padding: 15px;
+            }
+            h1 {
+                font-size: 22px;
+            }
+            .names {
+                font-size: 18px;
+            }
+            .similarity-score {
+                font-size: 50px;
+            }
+            .evaluation {
+                font-size: 14px;
+                padding: 10px;
+            }
+            .back-button, .retry-button {
+                padding: 8px 16px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>看看你和TA的亲密度分析结果</h1>
+        
+        <div th:if="${error}" class="error">
+            <p th:text="${error}"></p>
+            <a href="/" class="retry-button">重新分析</a>
+        </div>
+        
+        <div th:if="${similarity != null}">
+            <div class="names">
+                <span th:text="${name1}"></span> 与 <span th:text="${name2}"></span>
+            </div>
+            
+            <div class="similarity-score">
+                <span th:text="${similarity}"></span>%
+            </div>
+            
+            <div class="evaluation">
+                <p th:text="${evaluation}"></p>
+            </div>
+            
+            <div class="timestamp" style="margin: 15px 0; font-size: 14px; color: #666;">
+                <p>分析时间: <span th:text="${timestamp}"></span></p>
+            </div>
+            
+            <div class="disclaimer">
+                <p>✨ 本分析基于AI算法，仅供娱乐参考，结果并不具有科学依据 ✨</p>
+            </div>
+        </div>
+        
+        <a href="/" class="back-button">重新分析</a>
+    </div>
+</body>
+</html>
